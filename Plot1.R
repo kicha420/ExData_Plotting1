@@ -1,0 +1,11 @@
+library(dplyr)
+path<-getwd()
+path_file<-"course/project5/"
+my_data<-read.table(paste(path,paste(path_file,"household_power_consumption.txt",sep = ""),sep="/"),header = TRUE,sep = ";")
+my_data$Date<-as.Date(my_data$Date,"%d/%m/%Y")
+my_data$Time<-format(strptime(paste(my_data$Date,my_data$Time),format ="%Y-%d-%d %H:%M:%S"),"%H:%M:%S")
+my_data<-subset(my_data,Date>='2007-02-01'&Date<='2007-02-02')
+par("mfrow"=c(1,1))
+hist(as.numeric(my_data$Global_active_power),col = "red",xlab = "Golbal Active Power (killowatts)",main = "Global Active Power")
+dev.copy(png,"plot1.png",width=480,height=480)
+dev.off()
